@@ -1,4 +1,4 @@
-#include <glad/glad.h>
+/*#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <iostream>
@@ -33,21 +33,26 @@ float vertices[] = {
 
 const char* vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
+"out vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
 "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"   vertexColor = vec4(0.5, 0.0, 0.0, 1.0); \n"
 "}\0";
 const char* fragmentShader1Source = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"in vec4 vertexColor;\n"
+"uniform vec4 ourColor;"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"   FragColor = ourColor;\n"
 "}\n\0";
 const char* fragmentShader2Source = "#version 330 core\n"
 "out vec4 FragColor;\n"
+"in vec4 vertexColor;\n"
 "void main()\n"
 "{\n"
-"   FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
+"   FragColor = vertexColor;\n"
 "}\n\0";
 
 int main() {
@@ -135,7 +140,7 @@ int main() {
 	glDeleteShader(fragmentShaderYellow);
 
 #pragma region 绘制两个彼此相连的三角形
-	/*unsigned VAO, VBO;
+	unsigned VAO, VBO;
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
 
@@ -147,7 +152,7 @@ int main() {
 	glEnableVertexAttribArray(0);
 
 	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);*/
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 #pragma endregion
 
 #pragma region 创建相同的两个三角形，但对它们的数据使用不同的VAO和VBO
@@ -182,7 +187,9 @@ int main() {
 	glEnableVertexAttribArray(0);
 
 #pragma endregion
-
+	int nrAttributes;
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
+	std::cout << nrAttributes << "\n";
 
 
 
@@ -193,8 +200,12 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		
 		glUseProgram(shaderProgramOrange);
-
+		float timeValue = glfwGetTime();
+		float grrenValue = (sin(timeValue) / 2.0f) + 0.5f;
+		int vertexColorLocation = glGetUniformLocation(shaderProgramOrange, "ourColor");
+		glUniform4f(vertexColorLocation, 0.0f, grrenValue, 0.0f, 1.0f);
 		glBindVertexArray(VAOs[0]);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 
@@ -225,3 +236,4 @@ void processInput(GLFWwindow* window) {
 		glfwSetWindowShouldClose(window, true);
 	}
 }
+*/
