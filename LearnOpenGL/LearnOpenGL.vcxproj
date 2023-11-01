@@ -137,6 +137,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CameraProgram.cpp" />
+    <ClCompile Include="CoordinateSystemProgram.cpp" />
     <ClCompile Include="HelloTriangle.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="HelloTriangleTest.cpp" />
@@ -144,17 +146,23 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="std_image.cpp" />
     <ClCompile Include="TextureProgram.cpp" />
+    <ClCompile Include="TransformProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Coordinate_f.glsl" />
+    <None Include="Coordinate_v.glsl" />
     <None Include="firstFragmentShader.glsl" />
     <None Include="fristVertexShader.glsl" />
     <None Include="packages.config" />
     <None Include="texture_f.glsl" />
     <None Include="texture_v.glsl" />
+    <None Include="transform_f.glsl" />
+    <None Include="transform_v.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="awesomeface.png" />
