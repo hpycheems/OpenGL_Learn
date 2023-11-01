@@ -57,6 +57,7 @@ public:
 	}
 
 	glm::mat4 GetViewMatrix() {
+		//return calculate_lookAt_matrix(Position, Position + Front, Up);
 		return glm::lookAt(Position, Position + Front, Up);
 	}
 
@@ -74,6 +75,7 @@ public:
 		if (direction == RIGHT) {
 			Position += Right * velocity;
 		}
+		//Position.y = 0;
 	}
 
 	void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true) {
@@ -115,6 +117,29 @@ private:
 
 		Right = glm::normalize(glm::cross(Front, WorldUp));
 		Up = glm::normalize(glm::cross(Right, Front));
+	}
+
+	glm::mat4 calculate_lookAt_matrix(glm::vec3 position, glm::vec3 target, glm::vec3 worldUp) {
+		glm::vec3 zaxis = glm::normalize(position - target);
+		glm::vec3 xaxis = glm::normalize(glm::cross(zaxis, glm::normalize(worldUp)));
+		glm::vec3 yaxis = glm::normalize(glm::cross(zaxis, xaxis));
+
+		glm::mat4 rotation(1);
+		rotation[0][0] = xaxis.x;
+		rotation[1][0] = xaxis.y;
+		rotation[2][0] = xaxis.z;
+		rotation[0][1] = yaxis.x;
+		rotation[1][1] = yaxis.y;
+		rotation[2][1] = yaxis.z;
+		rotation[0][2] = zaxis.x;
+		rotation[1][2] = zaxis.y;
+		rotation[2][2] = zaxis.z;
+		glm::mat4 translation(1);
+		translation[3][0] = -position.x;
+		translation[3][1] = -position.y;
+		translation[3][2] = -position.z;
+
+		return rotation * translation;
 	}
 };
 

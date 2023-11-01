@@ -45,6 +45,9 @@
     <ClCompile Include="CameraProgram.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ColorsProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -81,6 +84,15 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="Coordinate_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Colors_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Colors_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="LightPosition_f.glsl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
