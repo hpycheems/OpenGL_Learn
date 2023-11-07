@@ -15,37 +15,52 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="HelloTriangle.cpp">
+    <ClCompile Include="_01HelloTriangle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="HelloTriangleTest.cpp">
+    <ClCompile Include="_02HelloTriangleTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ShaderProgram.cpp">
+    <ClCompile Include="_03ShaderProgram.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="TextureProgram.cpp">
+    <ClCompile Include="_04TextureProgram.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="std_image.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="TransformProgram.cpp">
+    <ClCompile Include="_05TransformProgram.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CoordinateSystemProgram.cpp">
+    <ClCompile Include="_06CoordinateSystemProgram.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="CameraProgram.cpp">
+    <ClCompile Include="_07CameraProgram.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="ColorsProgram.cpp">
+    <ClCompile Include="_08ColorsProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="_09BasicLightingProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="_10MatrialProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="_11LightMapping.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,6 +72,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -95,6 +116,27 @@
     <None Include="LightPosition_f.glsl">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="LightPosition_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="BasicColor_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="BasicColor_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Material_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Material_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="LightMapping_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="LightMapping_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -104,6 +146,15 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="awesomeface.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="container2.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="container2_specular.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="lighting_maps_specular_color.png">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

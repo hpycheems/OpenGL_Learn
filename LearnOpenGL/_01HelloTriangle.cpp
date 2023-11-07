@@ -45,7 +45,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "}\n\0";
 
 
-int main1() {
+int main() {
 
 	//Init GLFW
 	glfwInit();
@@ -73,7 +73,7 @@ int main1() {
 
 	//frameCallback
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//Ïß¿òÄ£Ê½
 //=========================================================================================================================================
 
 	//vertexShader
