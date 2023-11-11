@@ -1,4 +1,4 @@
-
+/*
 #include "stb_image.h"
 #include "Shader.h"
 #include "Camera.h"
@@ -263,3 +263,5 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 void scroll_callbakc(GLFWwindow* window, double xoffset, double yoffset) {
 	camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
+
+*/

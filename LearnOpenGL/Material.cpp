@@ -30,6 +30,22 @@ void Material::use()
 	object.use();
 }
 
+void Material::setTexture(unsigned int diffuse)
+{
+	this->diffuseID	 = diffuse;
+}
+
+void Material::setTexture(unsigned int diffuse, unsigned int specular)
+{
+	this->diffuseID = diffuse;
+	this->specularID = specular;
+}
+
+void Material::setInt(const char* name, unsigned int texture)
+{
+	object.setInt(name, texture);
+}
+
 void Material::setMat4(const char* name, glm::mat4 parameter)
 {
 	object.setMat4(name, parameter);

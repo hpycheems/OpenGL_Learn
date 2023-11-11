@@ -63,6 +63,18 @@
     <ClCompile Include="_11LightMapping.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="_12ProjectorProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectionLight.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PointLight.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SpotLight.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -78,6 +90,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Material.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectionLight.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PointLight.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SpotLight.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -135,6 +156,24 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="LightMapping_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Projection_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Projection_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="PointLight_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="PointLight_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="SpotLight_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="SpotLight_f.glsl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

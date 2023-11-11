@@ -137,8 +137,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DirectionLight.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Material.cpp" />
+    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="_09BasicLightingProgram.cpp" />
     <ClCompile Include="_07CameraProgram.cpp" />
     <ClCompile Include="_08ColorsProgram.cpp" />
@@ -153,12 +156,16 @@
     <ClCompile Include="_05TransformProgram.cpp" />
     <ClCompile Include="_10MatrialProgram.cpp" />
     <ClCompile Include="_11LightMapping.cpp" />
+    <ClCompile Include="_12ProjectorProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="DirectionLight.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Material.h" />
+    <ClInclude Include="PointLight.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="SpotLight.h" />
     <ClInclude Include="stb_image.h" />
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +184,12 @@
     <None Include="Material_f.glsl" />
     <None Include="Material_v.glsl" />
     <None Include="packages.config" />
+    <None Include="PointLight_f.glsl" />
+    <None Include="PointLight_v.glsl" />
+    <None Include="Projection_f.glsl" />
+    <None Include="Projection_v.glsl" />
+    <None Include="SpotLight_f.glsl" />
+    <None Include="SpotLight_v.glsl" />
     <None Include="texture_f.glsl" />
     <None Include="texture_v.glsl" />
     <None Include="transform_f.glsl" />
