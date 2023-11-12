@@ -157,6 +157,7 @@
     <ClCompile Include="_10MatrialProgram.cpp" />
     <ClCompile Include="_11LightMapping.cpp" />
     <ClCompile Include="_12ProjectorProgram.cpp" />
+    <ClCompile Include="_13MultipleLightSourceProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -183,6 +184,8 @@
     <None Include="LightPosition_v.glsl" />
     <None Include="Material_f.glsl" />
     <None Include="Material_v.glsl" />
+    <None Include="MutipleLightSource_f.glsl" />
+    <None Include="MutipleLightSource_v.glsl" />
     <None Include="packages.config" />
     <None Include="PointLight_f.glsl" />
     <None Include="PointLight_v.glsl" />

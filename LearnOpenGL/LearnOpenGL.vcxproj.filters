@@ -75,6 +75,9 @@
     <ClCompile Include="SpotLight.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="_13MultipleLightSourceProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -174,6 +177,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="SpotLight_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="MutipleLightSource_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="MutipleLightSource_f.glsl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
