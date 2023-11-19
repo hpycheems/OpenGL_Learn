@@ -87,6 +87,12 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="_15DepthTestProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="_16StencilTestProgram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -198,6 +204,21 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="MutipleLightSource_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="model_loading_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="model_loading_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="DepthTest_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="DepthTest_f.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="ShaderSingleColor.glsl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

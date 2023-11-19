@@ -37,7 +37,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 	return textureID;
 }
 
-Model::Model(char* path)
+Model::Model(const char* path)
 {
 	loadModel(path);
 }
@@ -60,6 +60,7 @@ void Model::loadModel(std::string path)
 	}
 
 	directory = path.substr(0, path.find_last_of('/'));
+	//std::cout << "directory:" << directory << "\n";
 
 	processNode(scene->mRootNode, scene);
 }

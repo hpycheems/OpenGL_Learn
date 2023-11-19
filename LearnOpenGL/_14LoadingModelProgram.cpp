@@ -1,4 +1,4 @@
-
+/*
 #include "stb_image.h"
 #include "Shader.h"
 #include "Camera.h"
@@ -6,6 +6,7 @@
 #include "DirectionLight.h"
 #include "PointLight.h"
 #include "SpotLight.h"
+#include "Model.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -15,6 +16,7 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <fstream>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -52,7 +54,7 @@ int main() {
 	glfwSetScrollCallback(window, scroll_callbakc);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
-	//=============================================================================================================
+//=============================================================================================================
 
 	float vertices[] = {
 		// positions          // normals           // texture coords
@@ -114,6 +116,13 @@ int main() {
 	glBindVertexArray(0);
 
 	DirectionLight directionLight("LightPosition_v.glsl", "LightPosition_f.glsl", glm::vec3(-0.2f, -0.2f, -0.2f));
+	PointLight pointLight("LightPosition_v.glsl", "LightPosition_f.glsl", glm::vec3(0.0f, 1.5f, 0.5f));
+	pointLight.setDiffuse(glm::vec3(1, 1, 1));
+
+	Shader ourShader("model_loading_v.glsl", "model_loading_f.glsl");
+
+	std::string path = "resources/object/nanosuit/nanosuit.obj";
+	Model ourModel(path.c_str());
 
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
@@ -135,6 +144,43 @@ int main() {
 		directionLight.setMat4("model", model);
 		glBindVertexArray(lightVAO);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, pointLight.position); // translate it down so it's at the center of the scene
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
+		pointLight.use();
+		directionLight.setMat4("projection", projection);
+		directionLight.setMat4("view", view);
+		directionLight.setMat4("model", model);
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		ourShader.use();
+		ourShader.setMat4("projection", projection);
+		ourShader.setMat4("view", view);
+
+		ourShader.setFloat("material.shininess", 64);
+		ourShader.setVec3("directionLight.direction", directionLight._direction);
+		ourShader.setVec3("directionLight.ambient", directionLight.ambient);
+		ourShader.setVec3("directionLight.diffuse", directionLight.diffuse);
+		ourShader.setVec3("directionLight.specular", directionLight.specular);
+
+		ourShader.setFloat("pointLight.constant", pointLight.constant);
+		ourShader.setFloat("pointLight.linear", pointLight.linear);
+		ourShader.setFloat("pointLight.quadratic", pointLight.quadratic);
+		ourShader.setVec3("pointLight.position", pointLight.position);
+		ourShader.setVec3("pointLight.ambient", pointLight.ambient);
+		ourShader.setVec3("pointLight.diffuse", pointLight.diffuse);
+		ourShader.setVec3("pointLight.specular", pointLight.specular);
+
+		ourShader.setVec3("viewPos", camera.Position);
+
+		model = glm::mat4(1);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));	// it's a bit too big for our scene, so scale it down
+		ourShader.setMat4("model", model);
+		ourModel.Draw(ourShader);
+
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -179,3 +225,4 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 void scroll_callbakc(GLFWwindow* window, double xoffset, double yoffset) {
 	camera.ProcessMouseScroll(static_cast<float>(yoffset));
 }
+*/

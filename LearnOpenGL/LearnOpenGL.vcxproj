@@ -161,6 +161,8 @@
     <ClCompile Include="_12ProjectorProgram.cpp" />
     <ClCompile Include="_13MultipleLightSourceProgram.cpp" />
     <ClCompile Include="_14LoadingModelProgram.cpp" />
+    <ClCompile Include="_15DepthTestProgram.cpp" />
+    <ClCompile Include="_16StencilTestProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -181,6 +183,8 @@
     <None Include="Colors_v.glsl" />
     <None Include="Coordinate_f.glsl" />
     <None Include="Coordinate_v.glsl" />
+    <None Include="DepthTest_f.glsl" />
+    <None Include="DepthTest_v.glsl" />
     <None Include="firstFragmentShader.glsl" />
     <None Include="fristVertexShader.glsl" />
     <None Include="LightMapping_f.glsl" />
@@ -189,6 +193,8 @@
     <None Include="LightPosition_v.glsl" />
     <None Include="Material_f.glsl" />
     <None Include="Material_v.glsl" />
+    <None Include="model_loading_f.glsl" />
+    <None Include="model_loading_v.glsl" />
     <None Include="MutipleLightSource_f.glsl" />
     <None Include="MutipleLightSource_v.glsl" />
     <None Include="packages.config" />
@@ -196,6 +202,7 @@
     <None Include="PointLight_v.glsl" />
     <None Include="Projection_f.glsl" />
     <None Include="Projection_v.glsl" />
+    <None Include="ShaderSingleColor.glsl" />
     <None Include="SpotLight_f.glsl" />
     <None Include="SpotLight_v.glsl" />
     <None Include="texture_f.glsl" />
