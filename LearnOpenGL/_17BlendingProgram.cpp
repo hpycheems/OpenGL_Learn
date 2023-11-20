@@ -17,6 +17,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <map>
 
 unsigned int loadTexture(char const* path);
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -55,48 +56,36 @@ int main() {
 	glfwSetScrollCallback(window, scroll_callbakc);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glEnable(GL_DEPTH_TEST);
+	//透明度测试
+	//discard
 
-	//启用模板缓冲
-	glEnable(GL_STENCIL_TEST);
+	//透明度混合
+	glEnable(GL_BLEND);
+	//Cr = Cs * Fs + Cd * Fd
+	//Cs:源颜色向量，这是源自纹理的颜色向量
+	//Cd:目标颜色向量，这是当前储存在颜色缓冲中的颜色向量。
+	//Fs:源因子值。指定了alpha值对源颜色的影响。
+	//Fd:目标因子值。指定了alpha值对目标颜色的影响。
 
-	//glStencilMask允许我们设置一个遮掩码，它会与要写入的模板值进行与运算。默认情况下设置的位遮掩码所有位都为1
-	//不影响输出，但如果将它设置为0x00，写入缓冲的所有模板值最后都变成0。
-	glStencilMask(0xFF);//每一位写入模板缓冲时都保持原样
-	glStencilMask(0x00); // 每一位在写入模板缓冲时都会变成0（禁用写入）
+	//glBlendFunc(sfactor, dfactor)函数数接受两个参数，来设置源和目标因子。
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//一共有两个函数能够用来配置模板测试：glStencilFunc和glStencilOp。
-	//glSteniclFunc(func, ref, mask)
-	//func:设置模板测试函数
-	//ref:设置了模板测试的参考值
-	//mask:设置一个掩码，它将会与参考值和储存的模板值在测试比较它们之前进行与(AND)运算。
-	glStencilFunc(GL_EQUAL, 1, 0xFF);//这会告诉OpenGL，只要一个片段的模板值等于(GL_EQUAL)参考值1，片段将会通过测试并被绘制，否则会被丢弃。
+	//也可以使用glBlendFuncSparate()
+	//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+	//这个函数和我们之前设置的那样设置了RGB分量，但这样只能让最终的alpha分量被源颜色向量的alpha值所影响到。
 
-	//glStencilOp(sfail, dpfail, dppass)
-	//sfail:模板测试失败时采取的行为
-	//dpfail:模板测试通过，但深度测试失败时采取的行为。
-	//dppass:模板测试深度测试都通过时采取的行为。
-	// keep zero replace(设置为glStencilFunc函数设置的ref值)
-	// incr 如果模板值小于最大值则将模板值加1
-	// incr_warp 与GL_INCR一样，但如果模板值超过了最大值则归零
-	// decr 	如果模板值大于最小值则将模板值减1
-	// decr_warp 与GL_DECR一样，但如果模板值小于0则将其设置为最大值
-	// invert 按位翻转当前的模板缓冲值
-	//默认情况下glStencilOp是设置为(GL_KEEP, GL_KEEP, GL_KEEP)的，
+	//改变方程中源和目标部分的运算符。
+	//glBlendEquation(GL_FUNC_ADD);
+	//GL_FUNC_ADD：默认选项，将两个分量相加
+	//GL_FUNC_SUBTRACT：将两个分量相减
+	//GL_FUNC_REVERSE_SUBTRACT：将两个分量相减，但顺序相反
 
+	//当绘制一个有不透明和透明物体的场景的时候，大体的原则如下：
+	//1.线绘制所有不透明的物体
+	//2.对所有透明物体排序
+	//3.按顺序绘制所有透明物体
 
-	//模板缓冲操作允许我们在渲染片段时将模板缓冲设定为一个特定的值。通过在渲染时修改模板缓冲的内容，我们写入了末班缓冲。
-	//在同一个渲染迭代中，我们可以读取这些值，来决定丢弃还是保留某个片段。
-	//步骤：启用模板缓冲写入
-	//渲染物体，更新模板缓冲的内容。
-	//禁用模板缓冲的写入。
-	//渲染物体，这次根据模板缓冲的内容丢弃特定的片段。
-
-
-	//绘制物体边框
-	//1.在绘物体之前，将模板函数设置为GL_ALWAYS，每当物体的片段被渲染时，将模板缓冲更新为1。
-	//2.渲染物体。3.禁用模板写入以及深度测试。 4.将每个物体缩放一点点。 5.使用一个不同的片段着色器，输出一个单独的（边框）颜色。
-	//6.再次绘制物体，但只在它们片段的模板值不等于1时才绘制。
-	//7.再次启用模板写入和深度测试。
+	//=====================================================================================================
 	float cubeVertices[] = {
 		// positions          // texture Coords
 		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -151,6 +140,32 @@ int main() {
 		-5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
 		 5.0f, -0.5f, -5.0f,  2.0f, 2.0f
 	};
+	float transparentVertices[] = {
+		// positions         // texture Coords (swapped y coordinates because texture is flipped upside down)
+		0.0f,  0.5f,  0.0f,  0.0f,  0.0f,
+		0.0f, -0.5f,  0.0f,  0.0f,  1.0f,
+		1.0f, -0.5f,  0.0f,  1.0f,  1.0f,
+
+		0.0f,  0.5f,  0.0f,  0.0f,  0.0f,
+		1.0f, -0.5f,  0.0f,  1.0f,  1.0f,
+		1.0f,  0.5f,  0.0f,  1.0f,  0.0f
+	};
+	std::vector<glm::vec3> vegetation;
+	vegetation.push_back(glm::vec3(-1.5f, 0.0f, -0.48f));
+	vegetation.push_back(glm::vec3(1.5f, 0.0f, 0.51f));
+	vegetation.push_back(glm::vec3(0.0f, 0.0f, 0.7f));
+	vegetation.push_back(glm::vec3(-0.3f, 0.0f, -2.3f));
+	vegetation.push_back(glm::vec3(0.5f, 0.0f, -0.6f));
+
+	std::vector<glm::vec3> windows
+	{
+		glm::vec3(-1.5f, 0.0f, -0.48f),
+		glm::vec3(1.5f, 0.0f, 0.51f),
+		glm::vec3(0.0f, 0.0f, 0.7f),
+		glm::vec3(-0.3f, 0.0f, -2.3f),
+		glm::vec3(0.5f, 0.0f, -0.6f)
+	};
+
 	// cube VAO
 	unsigned int cubeVAO, cubeVBO;
 	glGenVertexArrays(1, &cubeVAO);
@@ -175,13 +190,55 @@ int main() {
 	glEnableVertexAttribArray(1);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glBindVertexArray(0);
+	// transparent VAO
+	unsigned int transparentVAO, transparentVBO;
+	glGenVertexArrays(1, &transparentVAO);
+	glGenBuffers(1, &transparentVBO);
+	glBindVertexArray(transparentVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, transparentVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(transparentVertices), transparentVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glBindVertexArray(0);
+
+
+
+
+	unsigned int grassTexture;
+	glGenTextures(1, &grassTexture);
+	glBindTexture(GL_TEXTURE_2D, grassTexture);
+	int width, height, nrComponents;
+	stbi_set_flip_vertically_on_load_thread(true);
+	unsigned char* data = stbi_load("grass.png", &width, &height, &nrComponents, 0);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	}
+	else {
+		std::cout << "Load Texture Failed! \n";
+	}
+	stbi_image_free(data);
+
 
 	unsigned cubeTexture = loadTexture("container2.png");
 	unsigned floorTexture = loadTexture("container.jpg");
+	unsigned glassTexture = loadTexture("blending_transparent_window.png");
 	Shader shader("DepthTest_v.glsl", "DepthTest_f.glsl");
 	Shader singleColor("DepthTest_v.glsl", "ShaderSingleColor.glsl");
+	Shader grassShader("grass_v.glsl", "grass_f.glsl");
+	Shader blendShader("grass_v.glsl", "glass_f.glsl");
 	shader.use();
 	shader.setInt("texture1", 0);
+	grassShader.use();
+	grassShader.setInt("texture1", 0);
+	blendShader.use();
+	blendShader.setInt("glassTexture", 0);
 
 
 	while (!glfwWindowShouldClose(window)) {
@@ -190,11 +247,15 @@ int main() {
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		glEnable(GL_STENCIL_TEST);
-		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		std::map<float, glm::vec3> sorted;
+		for (unsigned int i = 0; i < windows.size(); i++)
+		{
+			float distance = glm::length(camera.Position - windows[i]);
+			sorted[distance] = windows[i];
+		}
 
-		glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+		glClearColor(0, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		shader.use();
 		glm::mat4 model = glm::mat4(1.0f);
@@ -203,16 +264,11 @@ int main() {
 		shader.setMat4("view", view);
 		shader.setMat4("projection", projection);
 
-		glStencilMask(0X00);
 		glBindVertexArray(planeVAO);
 		glBindTexture(GL_TEXTURE_2D, floorTexture);
 		shader.setMat4("model", glm::mat4(1.0f));
 		glDrawArrays(GL_TRIANGLES, 0, 6);
 		glBindVertexArray(0);
-
-		
-		glStencilFunc(GL_ALWAYS, 1, 0xFF);
-		glStencilMask(0XFF);
 
 		glBindVertexArray(cubeVAO);
 		glActiveTexture(GL_TEXTURE0);
@@ -225,28 +281,34 @@ int main() {
 		shader.setMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-		glStencilMask(0x00);
-		glDisable(GL_DEPTH_TEST);
-		singleColor.use();
-		singleColor.setMat4("view", view);
-		singleColor.setMat4("projection", projection);
+		////grass
+		//glActiveTexture(GL_TEXTURE0);
+		//glBindTexture(GL_TEXTURE_2D, grassTexture);
+		//grassShader.use();
+		//grassShader.setMat4("view", view);
+		//grassShader.setMat4("projection", projection);
+		//for (unsigned int i = 0; i < vegetation.size(); i++)
+		//{
+		//	model = glm::mat4(1.0f);
+		//	model = glm::translate(model, vegetation[i]);
+		//	grassShader.setMat4("model", model);
+		//	glDrawArrays(GL_TRIANGLES, 0, 6);
+		//}
 
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(-1.0f, 0.0f, -1.0f));
-		model = glm::scale(model, glm::vec3(1.1f));
-		shader.setMat4("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.1f));
-		shader.setMat4("model", model);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		//glass
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, glassTexture);
+		blendShader.use();
+		blendShader.setMat4("view", view);
+		blendShader.setMat4("projection", projection);
+		for (std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); ++it)
+		{
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, it->second);
+			blendShader.setMat4("model", model);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
+		}
 
-		glBindVertexArray(0);
-		glStencilMask(0xFF);
-		glStencilFunc(GL_ALWAYS, 0, 0xFF);
-		glEnable(GL_DEPTH_TEST);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -255,7 +317,6 @@ int main() {
 	glfwTerminate();
 	return 0;
 }
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 }
@@ -327,4 +388,5 @@ unsigned int loadTexture(char const* path)
 
 	return textureID;
 }
+
 */

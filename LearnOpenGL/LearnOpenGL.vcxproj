@@ -163,6 +163,8 @@
     <ClCompile Include="_14LoadingModelProgram.cpp" />
     <ClCompile Include="_15DepthTestProgram.cpp" />
     <ClCompile Include="_16StencilTestProgram.cpp" />
+    <ClCompile Include="_17BlendingProgram.cpp" />
+    <ClCompile Include="_18FaceEliminateProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
@@ -185,8 +187,13 @@
     <None Include="Coordinate_v.glsl" />
     <None Include="DepthTest_f.glsl" />
     <None Include="DepthTest_v.glsl" />
+    <None Include="faceEliminate_f.glsl" />
+    <None Include="faceEliminate_v.glsl" />
     <None Include="firstFragmentShader.glsl" />
     <None Include="fristVertexShader.glsl" />
+    <None Include="glass_f.glsl" />
+    <None Include="grass_f.glsl" />
+    <None Include="grass_v.glsl" />
     <None Include="LightMapping_f.glsl" />
     <None Include="LightMapping_v.glsl" />
     <None Include="LightPosition_f.glsl" />
@@ -212,9 +219,11 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="awesomeface.png" />
+    <Image Include="blending_transparent_window.png" />
     <Image Include="container.jpg" />
     <Image Include="container2.png" />
     <Image Include="container2_specular.png" />
+    <Image Include="grass.png" />
     <Image Include="lighting_maps_specular_color.png" />
     <Image Include="wall.jpg" />
   </ItemGroup>
