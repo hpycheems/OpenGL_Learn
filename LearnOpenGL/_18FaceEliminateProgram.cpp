@@ -1,4 +1,4 @@
-
+/*
 #include "stb_image.h"
 #include "Shader.h"
 #include "Camera.h"
@@ -250,3 +250,4 @@ unsigned int loadTexture(char const* path)
 
 	return textureID;
 }
+*/

@@ -99,6 +99,9 @@
     <ClCompile Include="_18FaceEliminateProgram.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="_19FrameBufferPragram.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -240,6 +243,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="faceEliminate_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="FrameBuffer_v.glsl">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="Framebuffer_f.glsl">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
